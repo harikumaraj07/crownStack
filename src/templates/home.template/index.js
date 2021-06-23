@@ -1,26 +1,44 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text, FlatList, RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Header from '../../components/Header';
+import Item from '../../components/Item';
+import Loader from '../../components/Loader';
 import styles from './styles';
 
 const propTypes = {
-  onPressLeftIcon: PropTypes.func,
+  data: PropTypes.array,
+  isLoading: PropTypes.bool,
 };
 
 const defaultProps = {
-  onPressLeftIcon: () => {},
+  data: [],
+  isLoading: false,
 };
 
 const HomeTemplate = props => {
-  const {onPressLeftIcon} = props;
+  const { data, isLoading, getData } = props;
 
   return (
     <View style={styles.wrapper}>
-      <Header title="Home" onPressLeftIcon={onPressLeftIcon} />
+      <Header title="Home" leftIcon={null} />
       <View style={styles.container}>
-        <Text>Home</Text>
+        {
+          isLoading
+            ? <Loader containerStyle={styles.containerStyle} />
+            : <FlatList
+            keyExtractor={(item, index) => `item-${index}`}
+              data={data}
+              renderItem={({ item }) => <Item {...props} item={item} />}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isLoading}
+                  onRefresh={getData}
+                />
+              }
+            />
+        }
       </View>
     </View>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, ActivityIndicator, Modal} from 'react-native';
+import { ImageBackground, ActivityIndicator, Modal } from 'react-native';
 import PropTypes from 'prop-types';
 
+import { splashScreen } from '../../assets';
 import styles from './styles';
 
 const propTypes = {
@@ -13,13 +14,17 @@ const defaultProps = {
 };
 
 const Loader = props => {
-  const {loading} = props;
+  const { loading } = props;
 
   return (
     <Modal transparent={true} animationType="fade" visible={loading}>
-      <View style={styles.container}>
+      <ImageBackground
+        style={styles.container}
+        source={splashScreen}
+        resizeMode="cover"
+      >
         <ActivityIndicator size="large" color="#2E384D" />
-      </View>
+      </ImageBackground>
     </Modal>
   );
 };

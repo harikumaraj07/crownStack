@@ -1,35 +1,59 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Home from '../../templates/home.template';
+import { getDataAction, setDetailsAction, toggleFullScreenLoadingAction } from '../../actions/app.actions';
 
 const propTypes = {
-  logout: PropTypes.func,
+  data: PropTypes.array,
+  isLoading: PropTypes.bool,
+  getData: PropTypes.func,
+  setDetails: PropTypes.func,
+  navigation: PropTypes.object,
+  toggleFullScreenLoading: PropTypes.func,
 };
 
 const defaultProps = {
-  logout: () => {},
+  data: [],
+  isLoading: false,
+  getData: () => { },
+  setDetails: () => { },
+  navigation: {},
+  toggleFullScreenLoading: () => {},
 };
 
 const HomeContainer = props => {
-  const {logout} = props;
+  const { getData, navigation: { navigate }, setDetails, toggleFullScreenLoading } = props;
 
-  const onPressLeftIcon = () => {
-    logout();
+  useEffect(() => {
+    setTimeout(() => {
+      toggleFullScreenLoading();
+    }, 2000);
+    getData();
+  }, []);
+
+  const onItemPress = item => {
+    setDetails(item);
+    navigate('details');
   };
 
-  return <Home {...props} onPressLeftIcon={onPressLeftIcon} />;
+  return <Home {...props} onItemPress={onItemPress} />;
 };
 
 HomeContainer.defaultProps = defaultProps;
 
 HomeContainer.propTypes = propTypes;
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  data: state.app.data,
+  isLoading: state.app.isLoading,
+});
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch({type: 'LOGOUT_USER'}),
+  getData: () => dispatch(getDataAction()),
+  setDetails: payload => dispatch(setDetailsAction(payload)),
+  toggleFullScreenLoading: () => dispatch(toggleFullScreenLoadingAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

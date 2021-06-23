@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {widthPercent, heightPercent} from '../../utility/display.utils';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -6,8 +7,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 15,
     backgroundColor: '#FFFFFF',
   },
   content: {
@@ -18,6 +17,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     paddingHorizontal: 20,
     paddingTop: 30,
+  },
+  containerStyle: {
+    height: heightPercent(100),
+    width: widthPercent(100),
   },
 });
 

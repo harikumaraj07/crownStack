@@ -1,4 +1,6 @@
-const styles = {
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
   toolbarContainer: {
     width: '100%',
     paddingHorizontal: 16,
@@ -12,6 +14,11 @@ const styles = {
     marginLeft: 5,
     color: '#ffffff',
     fontSize: 20,
+  },
+  fixed: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
   },
   leftIconContainer: {
     justifyContent: 'center',
@@ -62,8 +69,8 @@ const styles = {
     flexDirection: 'row',
   },
   transparentBackground: {
-    backgroundColor: 'reba(0, 0, 0, 0)',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
-};
+});
 
 export default styles;
